@@ -12,9 +12,15 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  String _resposta = "A resposta é: ";
-  final myControllerAltura = TextEditingController();
-  final myControllerPeso = TextEditingController();
+  final String _txtPessoa = "O total para cada pessoa pagar: ";
+  final String _txtGarcom = "O total para pagar a taxa do Garçom: ";
+  final String _txtGeral = "O total geral a se pagar: ";
+  String _totalPessoa = "";
+  String _totalGarcom = "";
+  String _totalGeral = "";
+  final controllerPreco = TextEditingController();
+  final controllerQuantidade = TextEditingController();
+  final controllerGarcom = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,37 +28,89 @@ class _MyWidgetState extends State<MyWidget> {
       padding: const EdgeInsets.all(15),
       child: Column(
         children: [
+          const Center(
+            child: Text(
+                "Calcule o total da sua conta do bar e divida com seus amigos:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic)),
+          ),
+          const SizedBox(height: 10),
           TextField(
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
-            controller: myControllerPeso,
+            controller: controllerQuantidade,
             decoration: const InputDecoration(
-                labelText: "Peso",
+                labelText: "Quantidade de pessoas",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5)))),
           ),
           const SizedBox(height: 10),
           TextField(
             textAlign: TextAlign.center,
-            controller: myControllerAltura,
+            controller: controllerPreco,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
-                labelText: "Altura",
+                labelText: "Valor total da conta",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5)))),
           ),
-          ElevatedButton(onPressed: calcIMC, child: const Text("Calcular")),
-          if (_resposta.isNotEmpty) Text(_resposta)
+          const SizedBox(height: 10),
+          TextField(
+            textAlign: TextAlign.center,
+            controller: controllerGarcom,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+                labelText: "Porcentagem para o garçom (em %)",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5)))),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+              onPressed: calcIMC, child: const Text("Dividir a conta")),
+          const SizedBox(height: 10),
+          Text(
+            _txtGarcom,
+            style: const TextStyle(color: Colors.black, fontSize: 18),
+          ),
+          const SizedBox(height: 10),
+          if (_totalGarcom.isNotEmpty)
+            Text(
+              _totalGarcom,
+              style: const TextStyle(
+                  color: Color.fromARGB(255, 199, 48, 48), fontSize: 21),
+            ),
+          Text(_txtGeral,
+              style: const TextStyle(color: Colors.black, fontSize: 18)),
+          const SizedBox(height: 10),
+          if (_totalGeral.isNotEmpty)
+            Text(_totalGeral,
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 199, 48, 48), fontSize: 21)),
+          Text(_txtPessoa,
+              style: const TextStyle(color: Colors.black, fontSize: 18)),
+          const SizedBox(height: 10),
+          if (_totalPessoa.isNotEmpty)
+            Text(_totalPessoa,
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 199, 48, 48), fontSize: 21)),
         ],
       ),
     );
   }
 
   calcIMC() {
-    final double peso = double.parse(myControllerPeso.text);
-    final double altura = double.parse(myControllerAltura.text) / 100;
+    final int quantidade = int.parse(controllerQuantidade.text);
+    final double preco = double.parse(controllerPreco.text);
+    final double porcentagem = double.parse(controllerGarcom.text);
     setState(() {
-      _resposta = (peso / (altura * altura)).toString();
+      _totalGarcom = "R\$ ${(preco * (porcentagem / 100)).toStringAsFixed(2)}";
+      _totalGeral =
+          "R\$ ${(preco + (preco * (porcentagem / 100))).toStringAsFixed(2)}";
+      _totalPessoa =
+          "R\$ ${(((preco * (porcentagem / 100)) + preco) / quantidade).toStringAsFixed(2)}";
     });
   }
 }
@@ -64,14 +122,27 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-            title: const Text("IMC"),
-            backgroundColor: const Color.fromARGB(228, 15, 15, 15)),
-        body: body(),
-      ),
+          appBar: AppBar(
+              title: const Center(child: Text("Divide a conta do Bar")),
+              backgroundColor: const Color.fromARGB(228, 15, 15, 15)),
+          body: body(),
+          bottomNavigationBar: BottomAppBar(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: const [
+                Padding(padding: EdgeInsets.all(10)),
+                Text("Feito por Leon Junio Martins - LDDM 2023",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ],
+            ),
+          )),
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(226, 21, 144, 245))),
+              seedColor: const Color.fromARGB(225, 146, 46, 141))),
     );
   }
 
