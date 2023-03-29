@@ -5,6 +5,10 @@
 *.swp
 .DS_Store
 .atom/
+.windows/
+.web/
+.macos/
+.linux/
 .buildlog/
 .history
 .svn/
@@ -31,10 +35,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/windows/
-/web/
-/macos/
-/linux/
 
 # Symbolication related
 app.*.symbols
