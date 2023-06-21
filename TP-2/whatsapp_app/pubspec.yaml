@@ -1,0 +1,30 @@
+name: whatsapp_app
+description: A new Flutter project.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=2.19.5 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: 0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  #flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - resources/ct1.png
+    - resources/ct2.png
+    - resources/ct3.png
+    - resources/ct4.png
+    - resources/ct5.png
+    - resources/ct6.png
+    - resources/ct7.png
+    - resources/default.png
+    - resources/background.jpg
