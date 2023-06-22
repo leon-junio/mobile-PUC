@@ -2,6 +2,7 @@
 *.cmake
 *.make
 *.c
+*.txt
 *.html
 *.class
 *.lock
