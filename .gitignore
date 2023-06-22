@@ -1,4 +1,8 @@
 # Miscellaneous
+*.cmake
+*.make
+*.c
+*.html
 *.class
 *.lock
 *.log
